@@ -19,7 +19,7 @@ type File struct {
 }
 
 func DownloadFile(c *gin.Context) {
-	path := config.Get().OutputDir + "/" + c.Params.ByName("name")
+	path := config.Get().ImagesDir + "/" + c.Params.ByName("name")
 
 	c.Header("Content-Disposition", "attachment; filename="+c.Params.ByName("name"))
 	c.File(path)
@@ -27,7 +27,7 @@ func DownloadFile(c *gin.Context) {
 
 func UploadFile(c *gin.Context) {
 	file, header, err := c.Request.FormFile("file")
-	path := config.Get().OutputDir + "/" + header.Filename
+	path := config.Get().ImagesDir + "/" + header.Filename
 
 	out, err := os.Create(path)
 	if err != nil {

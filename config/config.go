@@ -10,7 +10,7 @@ type Config struct {
 	Ip                   string
 	Database             string
 	GraylogAddr          string
-	OutputDir            string
+	ImagesDir            string
 	TemplatesPath        string
   CORSAllowOrigin      string
   CORSAllowCredentials string

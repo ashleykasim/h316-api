@@ -6,7 +6,7 @@ Database = "akasim-recipes"
 #GraylogAddr =
 
 # Absolute base path for output
-OutputDir = "/tmp/resources"
+ImagesDir = "/tmp/resources"
 
 # Path for template resources
 # Default is relative path to files packaged with project
