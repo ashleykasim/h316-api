@@ -46,7 +46,9 @@ func main() {
 	//TODO: get by name, not db id
 	router.PUT("/recipes/:id", models.UpdateRecipe)
 	router.DELETE("/recipes/:id", models.DeleteRecipe)
-	// router.PUT("/recipes/:id/generate", models.GenerateProjectFiles)
+
+	router.GET("/menus", models.GetAllMenus)
+	router.POST("/menus", models.CreateMenu)
 
 	router.GET("/files/:name", models.DownloadFile)
 	router.POST("/files", models.UploadFile)
