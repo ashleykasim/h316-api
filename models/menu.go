@@ -60,17 +60,17 @@ func CreateMenu(c *gin.Context) {
 	}
 }
 
-// func DeleteTitle(c *gin.Context) {
-// 	id := c.Params.ByName("id")
-// 	err := db.Db.C("Titles").RemoveId(bson.ObjectIdHex(id))
-// 	if err != nil {
-// 		log.Println(err)
-// 		c.JSON(500, err)
-// 	} else {
-// 		c.Status(204)
-// 	}
-// }
-//
+func DeleteMenu(c *gin.Context) {
+	id := c.Params.ByName("id")
+	err := db.Db.C("menus").RemoveId(bson.ObjectIdHex(id))
+	if err != nil {
+		log.Println(err)
+		c.JSON(500, err)
+	} else {
+		c.Status(204)
+	}
+}
+
 // func UpdateTitle(c *gin.Context) {
 // 	id := c.Params.ByName("id")
 // 	Title := Title{}

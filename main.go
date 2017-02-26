@@ -50,6 +50,7 @@ func main() {
 	router.GET("/menus", models.GetAllMenus)
 	router.POST("/menus", models.CreateMenu)
 	router.GET("/menus/:date", models.GetMenusByDate)
+	router.DELETE("/menus/:id", models.DeleteMenu)
 
 	router.GET("/files/:name", models.DownloadFile)
 	router.POST("/files", models.UploadFile)
