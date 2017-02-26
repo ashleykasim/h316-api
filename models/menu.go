@@ -10,10 +10,12 @@ import (
 )
 
 type Menu struct {
-	Id                     bson.ObjectId `json:"id" bson:"_id,omitempty"`
-	Recipe                 string        `json:"title"`
-	Date                   string        `json:"start"`
-	Url						         string				 `json:"url"`
+	Id     bson.ObjectId `json:"id" bson:"_id,omitempty"`
+	Title  string        `json:"title"`
+	Date   string        `json:"start"`
+	Url    string        `json:"url"`
+	Meal   string        `json: "meal"`
+	Recipe Recipe        `json: "recipe"`
 }
 
 func GetAllMenus(c *gin.Context) {
@@ -29,39 +31,27 @@ func GetAllMenus(c *gin.Context) {
 	c.JSON(200, menus)
 }
 
-// func GetRecipeById(c *gin.Context) {
-// 	recipe := Recipe{}
-// 	id := c.Params.ByName("id")
-//
-// 	recipes := []Recipe{}
-//
-// 	err := db.Db.C("recipes").Find(nil).All(&recipes)
-//
-// 	for _, p := range recipes {
-// 		if p.Id == bson.ObjectIdHex(id) {
-// 			recipe = p
-// 		}
-// 	}
-//
-// 	// err := db.Db.C("recipes").FindId(bson.ObjectIdHex(id)).One(&recipe)
-// 	if err != nil {
-// 		log.Println(err)
-// 	}
-// 	log.Println(recipe.Id)
-// 	if recipe == (Recipe{}) {
-// 		c.JSON(404, gin.H{"error": "recipe not found"})
-// 	} else {
-// 		c.JSON(200, recipe)
-// 	}
-// }
+func GetMenusByDate(c *gin.Context) {
+	menus := []Menu{}
+	d := c.Params.ByName("date")
+
+	err := db.Db.C("menus").Find(bson.M{"date": d}).All(&menus)
+
+	if err != nil {
+		log.Println(err)
+	}
+	c.JSON(200, menus)
+}
 
 func CreateMenu(c *gin.Context) {
-  menu := Menu{}
+	menu := Menu{}
 	c.BindJSON(&menu)
 
-	err := db.Db.C("menus").Insert(&Menu{Recipe: menu.Recipe,
+	err := db.Db.C("menus").Insert(&Menu{Title: menu.Title,
 		Url:    menu.Url,
-		Date:   menu.Date})
+		Meal:   menu.Meal,
+		Date:   menu.Date,
+		Recipe: menu.Recipe})
 	if err != nil {
 		log.Println(err)
 		c.JSON(500, err)
@@ -70,9 +60,9 @@ func CreateMenu(c *gin.Context) {
 	}
 }
 
-// func DeleteRecipe(c *gin.Context) {
+// func DeleteTitle(c *gin.Context) {
 // 	id := c.Params.ByName("id")
-// 	err := db.Db.C("recipes").RemoveId(bson.ObjectIdHex(id))
+// 	err := db.Db.C("Titles").RemoveId(bson.ObjectIdHex(id))
 // 	if err != nil {
 // 		log.Println(err)
 // 		c.JSON(500, err)
@@ -81,31 +71,31 @@ func CreateMenu(c *gin.Context) {
 // 	}
 // }
 //
-// func UpdateRecipe(c *gin.Context) {
+// func UpdateTitle(c *gin.Context) {
 // 	id := c.Params.ByName("id")
-// 	recipe := Recipe{}
-// 	c.BindJSON(&recipe)
+// 	Title := Title{}
+// 	c.BindJSON(&Title)
 //
 // 	//validate which fields have changed to avoid setting unchanged fields to null
 // 	//TODO: is there a better way to do this?
-// 	orig := Recipe{}
-// 	err1 := db.Db.C("recipes").FindId(bson.ObjectIdHex(id)).One(&orig)
+// 	orig := Title{}
+// 	err1 := db.Db.C("Titles").FindId(bson.ObjectIdHex(id)).One(&orig)
 // 	if err1 != nil {
 // 		log.Println(err1)
 // 		c.JSON(500, err1)
 // 	}
-// 	if recipe.Name == "" {
-// 		recipe.Name = orig.Name
+// 	if Title.Name == "" {
+// 		Title.Name = orig.Name
 // 	}
-// 	if recipe.Description == "" {
-// 		recipe.Description = orig.Description
+// 	if Title.Description == "" {
+// 		Title.Description = orig.Description
 // 	}
-// 	if recipe.Directions == "" {
-// 		recipe.Directions = orig.Directions
+// 	if Title.Directions == "" {
+// 		Title.Directions = orig.Directions
 // 	}
-// 	recipe.Created = orig.Created
+// 	Title.Created = orig.Created
 //
-// 	err2 := db.Db.C("recipes").UpdateId(bson.ObjectIdHex(id), &Recipe{Name: recipe.Name, Description: recipe.Description, Directions: recipe.Directions, Created: recipe.Created, Updated: time.Now()})
+// 	err2 := db.Db.C("Titles").UpdateId(bson.ObjectIdHex(id), &Title{Name: Title.Name, Description: Title.Description, Directions: Title.Directions, Created: Title.Created, Updated: time.Now()})
 // 	if err2 != nil {
 // 		log.Println(err2)
 // 		c.JSON(500, err2)

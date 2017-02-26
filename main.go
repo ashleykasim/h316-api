@@ -10,8 +10,8 @@ import (
 
 	"recipes-api/config"
 	"recipes-api/db"
-	"recipes-api/models"
 	"recipes-api/middleware"
+	"recipes-api/models"
 )
 
 var router *gin.Engine
@@ -37,7 +37,7 @@ func main() {
 
 	db.Connect(config.Get().Ip, config.Get().Database)
 
-  router = gin.Default()
+	router = gin.Default()
 	router.Use(middleware.CORSMiddleware)
 
 	router.POST("/recipes", models.CreateRecipe)
@@ -49,6 +49,7 @@ func main() {
 
 	router.GET("/menus", models.GetAllMenus)
 	router.POST("/menus", models.CreateMenu)
+	router.GET("/menus/:date", models.GetMenusByDate)
 
 	router.GET("/files/:name", models.DownloadFile)
 	router.POST("/files", models.UploadFile)
