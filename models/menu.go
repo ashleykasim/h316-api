@@ -14,8 +14,8 @@ type Menu struct {
 	Title  string        `json:"title"`
 	Date   string        `json:"start"`
 	Url    string        `json:"url"`
-	Meal   string        `json: "meal"`
-	Recipe Recipe        `json: "recipe"`
+	Meal   string        `json:"meal"`
+	Recipe Recipe        `json:"recipe"`
 }
 
 func GetAllMenus(c *gin.Context) {
