@@ -12,12 +12,13 @@ import (
 
 //TODO: what fields should be stored for projects?
 type Recipe struct {
-	Id                     bson.ObjectId `json:"id" bson:"_id,omitempty"`
-	Name                   string        `json:"name"`
-	Created                time.Time     `json:"created"`
-	Updated                time.Time     `json:"updated"`
-	Description						 string				 `json:"description"`
-	Directions             string				 `json:"directions"`
+	Id          bson.ObjectId `json:"id" bson:"_id,omitempty"`
+	Name        string        `json:"name"`
+	Created     time.Time     `json:"created"`
+	Updated     time.Time     `json:"updated"`
+	Description string        `json:"description"`
+	Directions  string        `json:"directions"`
+	ImageUrl    string        `json:"imageUrl"`
 }
 
 func GetAllRecipes(c *gin.Context) {
@@ -64,9 +65,10 @@ func CreateRecipe(c *gin.Context) {
 	c.BindJSON(&recipe)
 
 	err := db.Db.C("recipes").Insert(&Recipe{Name: recipe.Name,
-		Description:	 recipe.Description,
-		Directions:    recipe.Directions,
-		Created:   time.Now()})
+		Description: recipe.Description,
+		Directions:  recipe.Directions,
+		ImageUrl:    recipe.ImageUrl,
+		Created:     time.Now()})
 	if err != nil {
 		log.Println(err)
 		c.JSON(500, err)
@@ -108,9 +110,12 @@ func UpdateRecipe(c *gin.Context) {
 	if recipe.Directions == "" {
 		recipe.Directions = orig.Directions
 	}
+	if recipe.ImageUrl == "" {
+		recipe.ImageUrl = orig.ImageUrl
+	}
 	recipe.Created = orig.Created
 
-	err2 := db.Db.C("recipes").UpdateId(bson.ObjectIdHex(id), &Recipe{Name: recipe.Name, Description: recipe.Description, Directions: recipe.Directions, Created: recipe.Created, Updated: time.Now()})
+	err2 := db.Db.C("recipes").UpdateId(bson.ObjectIdHex(id), &Recipe{Name: recipe.Name, Description: recipe.Description, Directions: recipe.Directions, ImageUrl: recipe.ImageUrl, Created: recipe.Created, Updated: time.Now()})
 	if err2 != nil {
 		log.Println(err2)
 		c.JSON(500, err2)
@@ -118,21 +123,3 @@ func UpdateRecipe(c *gin.Context) {
 		c.Status(204)
 	}
 }
-
-// func GenerateProjectFiles(c *gin.Context) {
-// 	id := c.Params.ByName("id")
-// 	proj := Project{}
-// 	err1 := db.Db.C("projects").FindId(bson.ObjectIdHex(id)).One(&proj)
-// 	if err1 != nil {
-// 		log.Println(err1)
-// 		c.JSON(500, err1)
-// 	}
-// 	var surfFileLocations, err = GenerateSurfFiles(proj)
-// 	if err != nil {
-// 		log.Println(err)
-// 		c.JSON(500, err)
-// 	} else {
-// 		c.JSON(201, surfFileLocations)
-// 	}
-//
-// }
