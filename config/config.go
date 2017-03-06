@@ -11,11 +11,10 @@ type Config struct {
 	Database             string
 	GraylogAddr          string
 	ImagesDir            string
-	TemplatesPath        string
-  CORSAllowOrigin      string
-  CORSAllowCredentials string
-  CORSAllowHeaders     string
-  CORSAllowMethods     string
+	CORSAllowOrigin      string
+	CORSAllowCredentials string
+	CORSAllowHeaders     string
+	CORSAllowMethods     string
 }
 
 var ServiceConfig Config

@@ -2,4 +2,4 @@
 
 cd "$(dirname "$0")"
 
-./bin/recipes-api
+./bin/h316-api

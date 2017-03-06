@@ -3,4 +3,4 @@
 cd "$(dirname "$0")"
 
 go get
-go build -o bin/recipes-api
+go build -o bin/h316-api

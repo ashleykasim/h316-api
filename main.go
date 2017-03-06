@@ -8,10 +8,10 @@ import (
 	"github.com/Graylog2/go-gelf/gelf"
 	"github.com/gin-gonic/gin"
 
-	"recipes-api/config"
-	"recipes-api/db"
-	"recipes-api/middleware"
-	"recipes-api/models"
+	"h316-api/config"
+	"h316-api/db"
+	"h316-api/middleware"
+	"h316-api/models"
 )
 
 var router *gin.Engine
@@ -52,8 +52,9 @@ func main() {
 	router.GET("/menus/:date", models.GetMenusByDate)
 	router.DELETE("/menus/:id", models.DeleteMenu)
 
-	router.GET("/files/:name", models.DownloadFile)
-	router.POST("/files", models.UploadFile)
+	// TODO: Implement file upload/download
+	// router.GET("/files/:name", models.DownloadFile)
+	// router.POST("/files", models.UploadFile)
 
 	router.Run()
 }

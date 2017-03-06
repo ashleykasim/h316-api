@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gopkg.in/mgo.v2/bson"
 
-	"recipes-api/db"
+	"h316-api/db"
 )
 
 //TODO: what fields should be stored for projects?

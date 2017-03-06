@@ -9,7 +9,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"recipes-api/config"
+	"h316-api/config"
 )
 
 type File struct {

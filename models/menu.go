@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gopkg.in/mgo.v2/bson"
 
-	"recipes-api/db"
+	"h316-api/db"
 )
 
 type Menu struct {
@@ -70,36 +70,3 @@ func DeleteMenu(c *gin.Context) {
 		c.Status(204)
 	}
 }
-
-// func UpdateTitle(c *gin.Context) {
-// 	id := c.Params.ByName("id")
-// 	Title := Title{}
-// 	c.BindJSON(&Title)
-//
-// 	//validate which fields have changed to avoid setting unchanged fields to null
-// 	//TODO: is there a better way to do this?
-// 	orig := Title{}
-// 	err1 := db.Db.C("Titles").FindId(bson.ObjectIdHex(id)).One(&orig)
-// 	if err1 != nil {
-// 		log.Println(err1)
-// 		c.JSON(500, err1)
-// 	}
-// 	if Title.Name == "" {
-// 		Title.Name = orig.Name
-// 	}
-// 	if Title.Description == "" {
-// 		Title.Description = orig.Description
-// 	}
-// 	if Title.Directions == "" {
-// 		Title.Directions = orig.Directions
-// 	}
-// 	Title.Created = orig.Created
-//
-// 	err2 := db.Db.C("Titles").UpdateId(bson.ObjectIdHex(id), &Title{Name: Title.Name, Description: Title.Description, Directions: Title.Directions, Created: Title.Created, Updated: time.Now()})
-// 	if err2 != nil {
-// 		log.Println(err2)
-// 		c.JSON(500, err2)
-// 	} else {
-// 		c.Status(204)
-// 	}
-// }

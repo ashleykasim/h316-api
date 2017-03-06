@@ -1,17 +1,12 @@
 # IP address for mongodb
 IP = "0.0.0.0"
-Database = "akasim-recipes"
+Database = "h316-api"
 
 # Graylog server address. If commented out, service will log to stderr only.
 #GraylogAddr =
 
-# Absolute base path for output
+# Absolute base path for images resources
 ImagesDir = "/tmp/resources"
-
-# Path for template resources
-# Default is relative path to files packaged with project
-# To make absolute path, start with "/"
-TemplatesPath = "resources/templates"
 
 # CORS settings to restrict clients who can make requests to the service
 CORSAllowOrigin = "*"

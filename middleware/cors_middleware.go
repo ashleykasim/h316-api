@@ -3,7 +3,7 @@ package middleware
 import (
   "github.com/gin-gonic/gin"
 
-  "recipes-api/config"
+  "h316-api/config"
 )
 
 func CORSMiddleware(c *gin.Context) {
