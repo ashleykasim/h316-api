@@ -25,3 +25,6 @@ $ go build -o bin/h316-api
 $ bin/h316-api
 ```
 _note: build the executable to `bin/` so that it gets gitignored_
+
+## License
+<a href="https://opensource.org/licenses/Apache-2.0">Apache-2.0 License</a>
