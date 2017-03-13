@@ -2,6 +2,7 @@ package models
 
 import (
 	"log"
+	"reflect"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -17,6 +18,7 @@ type Recipe struct {
 	Created     time.Time     `json:"created"`
 	Updated     time.Time     `json:"updated"`
 	Description string        `json:"description"`
+	Ingredients []string      `json:"ingredients"`
 	Directions  string        `json:"directions"`
 	ImageUrl    string        `json:"imageUrl"`
 }
@@ -53,7 +55,7 @@ func GetRecipeById(c *gin.Context) {
 		log.Println(err)
 	}
 	log.Println(recipe.Id)
-	if recipe == (Recipe{}) {
+	if reflect.DeepEqual(recipe, Recipe{}) {
 		c.JSON(404, gin.H{"error": "recipe not found"})
 	} else {
 		c.JSON(200, recipe)
@@ -67,6 +69,7 @@ func CreateRecipe(c *gin.Context) {
 	err := db.Db.C("recipes").Insert(&Recipe{Name: recipe.Name,
 		Description: recipe.Description,
 		Directions:  recipe.Directions,
+		Ingredients: recipe.Ingredients,
 		ImageUrl:    recipe.ImageUrl,
 		Created:     time.Now()})
 	if err != nil {
@@ -110,12 +113,15 @@ func UpdateRecipe(c *gin.Context) {
 	if recipe.Directions == "" {
 		recipe.Directions = orig.Directions
 	}
+	if len(recipe.Ingredients) == 0 {
+		recipe.Ingredients = orig.Ingredients
+	}
 	if recipe.ImageUrl == "" {
 		recipe.ImageUrl = orig.ImageUrl
 	}
 	recipe.Created = orig.Created
 
-	err2 := db.Db.C("recipes").UpdateId(bson.ObjectIdHex(id), &Recipe{Name: recipe.Name, Description: recipe.Description, Directions: recipe.Directions, ImageUrl: recipe.ImageUrl, Created: recipe.Created, Updated: time.Now()})
+	err2 := db.Db.C("recipes").UpdateId(bson.ObjectIdHex(id), &Recipe{Name: recipe.Name, Description: recipe.Description, Ingredients: recipe.Ingredients, Directions: recipe.Directions, ImageUrl: recipe.ImageUrl, Created: recipe.Created, Updated: time.Now()})
 	if err2 != nil {
 		log.Println(err2)
 		c.JSON(500, err2)
